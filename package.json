@@ -1,0 +1,30 @@
+{
+	"name": "task-manager-api",
+	"version": "1.0.0",
+	"description": "A task manager REST API application developed using Node.JS ",
+	"main": "src/server.js",
+	"scripts": {
+		"start": "node src/server.js",
+		"dev": "nodemon src/server.js"
+	},
+	"keywords": [
+		"Node.JS",
+		"REST",
+		"API",
+		"Task",
+		"Manager"
+	],
+	"author": "Kater Akeren",
+	"license": "ISC",
+	"dependencies": {
+		"@sendgrid/mail": "^7.0.0",
+		"bcryptjs": "^2.4.3",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.9.7",
+		"multer": "^1.4.2",
+		"sharp": "^0.25.2",
+		"validator": "^13.0.0"
+	}
+}

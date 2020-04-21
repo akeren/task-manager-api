@@ -8,8 +8,8 @@ module.exports = async (req, res) => {
 		if (!task) {
 			return res.status(404).send();
 		}
-		res.send(task);
-	} catch (e) {
-		res.status(500).send(e);
+		res.status(204).send();
+	} catch (error) {
+		res.status(500).json({ status: 'fail', error });
 	}
 };

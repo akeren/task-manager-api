@@ -7,7 +7,9 @@ module.exports = async (req, res) => {
 	});
 
 	if (!isValidOperation) {
-		return res.status(400).send({ error: 'Invalid Updates....!' });
+		return res
+			.status(400)
+			.json({ status: 'fail', error: 'Invalid Updates....!' });
 	}
 	try {
 		const task = await Task.findOne({
@@ -19,8 +21,8 @@ module.exports = async (req, res) => {
 		}
 		updates.forEach((update) => (task[update] = req.body[update]));
 		await task.save();
-		res.send(task);
-	} catch (e) {
-		res.status(400).send(e);
+		res.status(200).json({ status: 'success', task });
+	} catch (error) {
+		res.status(400).json({ status: 'fail', error });
 	}
 };

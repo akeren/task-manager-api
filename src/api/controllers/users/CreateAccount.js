@@ -9,8 +9,8 @@ module.exports = async (req, res) => {
 			throw new Error('Unable to create Account!');
 		}
 		const token = await user.generateAuthToken();
-		res.status(201).send({ user, token });
-	} catch (e) {
-		res.status(400).send(e);
+		res.status(201).json({status:'success', user, token });
+	} catch (error) {
+		res.status(400).json({status:'fail', error});
 	}
 };

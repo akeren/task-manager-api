@@ -5,13 +5,13 @@ module.exports = async (req, res) => {
 		return allowedUpdates.includes(update);
 	});
 	if (!isValidOperation) {
-		return res.status(400).send({ error: 'Invalid Updates..' });
+		return res.status(400).json({ status: 'fail', error: 'Invalid Updates..' });
 	}
 	try {
 		updates.forEach((update) => (req.user[update] = req.body[update]));
 		await req.user.save();
-		res.send(req.user);
-	} catch (e) {
-		res.status(400).send(e);
+		res.status(200).json({ status: 'success', user: req.user });
+	} catch (error) {
+		res.status(400).json({ status: 'fail', error });
 	}
 };

@@ -6,8 +6,9 @@ module.exports = async (req, res) => {
 			throw new Error();
 		}
 		res.set('Content-Type', 'image/png');
-		res.send(user.avatar);
-	} catch (e) {
-		res.status(404).send(e);
+		res.send();
+		res.status(200).json({ status: 'success', user: user.avatar });
+	} catch (error) {
+		res.status(404).json({ status: 'fail', error });
 	}
 };

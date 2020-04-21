@@ -1,3 +1,3 @@
 module.exports = async (req, res) => {
-	res.send(req.user);
+	res.status(200).json({ status: 'success', user: req.user });
 };

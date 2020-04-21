@@ -6,8 +6,8 @@ module.exports = async (req, res) => {
 			req.body.password
 		);
 		const token = await user.generateAuthToken();
-		res.send({ user, token });
-	} catch (e) {
-		res.status(400).send(e);
+		res.status(200).json({ status: 'success', user, token });
+	} catch (error) {
+		res.status(400).json({ status: 'fail', error });
 	}
 };

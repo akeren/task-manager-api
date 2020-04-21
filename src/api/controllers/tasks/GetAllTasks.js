@@ -13,9 +13,10 @@ module.exports = async (req, res) => {
 		} else if (parts[1].toUpperCase() === 'ASC') {
 			sort[parts[0]] = 1;
 		} else {
-			res
-				.status(400)
-				.send({ error: 'Allowed only asc and desc for sorting criterial' });
+			res.status(400).json({
+				status: 'fail',
+				error: 'Allowed only asc and desc for sorting criterial'
+			});
 		}
 	}
 	try {
@@ -30,8 +31,8 @@ module.exports = async (req, res) => {
 				}
 			})
 			.execPopulate();
-		res.send(req.user.tasks);
-	} catch (e) {
-		res.status(500).send(e);
+		res.status(200).json({ status: 'success', user: req.user.tasks });
+	} catch (error) {
+		res.status(500).json({ status: 'fail', error });
 	}
 };

@@ -6,8 +6,8 @@ module.exports = async (req, res) => {
 			owner: req.user._id
 		});
 		await task.save();
-		res.status(201).send(task);
-	} catch (e) {
-		res.status(400).send(e);
+		res.status(201).json({ status: 'success', task });
+	} catch (error) {
+		res.status(400).json({ status: 'fail', error });
 	}
 };

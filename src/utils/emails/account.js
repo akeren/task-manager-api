@@ -19,8 +19,8 @@ const sendCancelationEmailMessage = async (email, name) => {
 		await sgMail.send({
 			to: email,
 			from: 'noreply@kate.dev',
-			subject: `Sorry to you go, ${name}`,
-			text: `Goodbye, ${name}. I'd hope to see back soon.`
+			subject: `Sorry to see you go!`,
+			text: `Goodbye, ${name}. I'd hope to see you back soon.`
 		});
 	} catch (error) {
 		console.error(error);

@@ -1,6 +1,6 @@
 # Task Manager RESTFul API
 
-This is a task manager application built using NODE JS and MongoDB. It follows a **RESTFul API** design architecture.
+This is a task manager application built using NODE JS and MongoDB. It follows a **RESTFul API** design architecture. The app sends an email notification upon registration and deactivation of user's account.
 
 ## Features
 
@@ -16,6 +16,27 @@ This is a task manager application built using NODE JS and MongoDB. It follows a
 ## Postman Collection Link
 
 [Task Manager API Shared Collection](https://www.getpostman.com/collections/89a79eec894d9ce80b57)
+
+## NPM Dependencies
+
+    "@sendgrid/mail": "^7.0.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.7",
+    "multer": "^1.4.2",
+    "sharp": "^0.25.2",
+    "validator": "^13.0.0"
+
+## Installation
+
+    - Download and install git
+    - Install the project dependencies by typing this command to the terminal window: "npm install"
+    - Setup local environment variables
+    - Start your mongoDB server
+    - Check out the API documentation via the shared postman link above
+    - Good luck
 
 ## Contributions
 

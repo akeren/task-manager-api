@@ -15,7 +15,7 @@ It is a task manager application built using **NODE JS** and **MongoDB**. It fol
 
 ## Postman Collection Link
 
-[Task Manager API Shared Collection](https://www.getpostman.com/collections/89a79eec894d9ce80b57)
+[Task Manager API Shared Collection](https://documenter.getpostman.com/view/7972459/Szf82npY)
 
 ## Installation
 

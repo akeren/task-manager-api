@@ -5,7 +5,7 @@ const sendWelcomeEmailMessage = async (email, name) => {
 	try {
 		await sgMail.send({
 			to: email,
-			from: 'kater@dev.com',
+			from: 'akeren.dev@gmail.com',
 			subject: 'Thank you for Joing the Platform!',
 			text: `Welcome to the app, ${name}. Let me know how you get along with the App.`
 		});

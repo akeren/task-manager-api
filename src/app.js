@@ -1,18 +1,13 @@
-require('dotenv').config();
-const express = require('express');
+const express = require('express')
 
-// DB CONNECTION
-require('./utils/db/mongoose');
+const userRouter = require('./api/routes/user')
+const taskRouter = require('./api/routes/task')
+
+const app = express()
+app.use(express.json())
 
 // ROUTES
-const userRouter = require('./api/routes/user');
-const taskRouter = require('./api/routes/task');
+app.use(userRouter)
+app.use(taskRouter)
 
-const app = express();
-
-app.use(express.json());
-
-app.use(userRouter);
-app.use(taskRouter);
-
-module.exports = { app };
+module.exports = { app}

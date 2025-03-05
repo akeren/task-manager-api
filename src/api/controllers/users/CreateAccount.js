@@ -1,16 +1,30 @@
-const User = require('../../models/User');
-const { sendWelcomeEmailMessage } = require('../../../utils/emails/account');
-module.exports = async (req, res) => {
-	const user = new User(req.body);
+import User from "../../models/User.js";
+import { sendWelcomeEmailMessage } from "../../../utils/emails/account.js";
+
+const createAccount = async (req, res) => {
 	try {
-		await user.save();
-		sendWelcomeEmailMessage(user.email, user.name);
-		if (!user) {
-			throw new Error('Unable to create Account!');
+		const { email } = req.body;
+
+		const existingAccount = await User.findOne({ email: email });
+		if (existingAccount) {
+			return res
+				.status(400)
+				.json({ success: false, message: "Account already exists!" });
 		}
-		const token = await user.generateAuthToken();
-		res.status(201).json({status:'success', user, token });
+
+		const user = new User(req.body);
+		await user.save();
+
+		sendWelcomeEmailMessage(user.email, user.name);
+
+		if (!user) {
+			throw new Error("Unable to create Account!");
+		}
+		res.status(201).json({ success: true, user });
 	} catch (error) {
-		res.status(400).json({status:'fail', error});
+		console.error("Error while creating account", error);
+		res.status(400).json({ success: false, message: "Internal server error" });
 	}
 };
+
+export default createAccount;

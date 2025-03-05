@@ -1,6 +1,6 @@
 # Task Manager RESTFul-API
 
-Task manager application built using **NODE JS** and **MongoDB**. It follows a **RESTFul API** design architecture. The app sends an email notification upon registration and deactivation of the user's account. It's richly built with a simple scientific technique and best practices in the world of **API** design.
+Task manager application built using **NODE JS** and **MongoDB**. It follows a **RESTFul API** design architecture. The app sends an email notification upon registration and deactivation of the user's account. It's richly built with a simple scientific technique and best practices in the world of **API** design. The incoming data is validated for both users and tasks using a third party library called Joi. The api is using JWT authentication where it generates a JWT token and sends to the client on first login and then the client must provide JWT token in the Authorization header in every request made by the client.
 
 ## Features
 
@@ -17,6 +17,7 @@ Task manager application built using **NODE JS** and **MongoDB**. It follows a *
 | POST    | /users/login                       | Public  | Login                                    |
 | GET     | /users/me                          | Private | User's Profile                           |
 | PATCH   | /users/me                          | Private | Update Profile                           |
+| PUT     | /users/update-login                | Private | Update Password and email                |
 | POST    | /users/me/avatar                   | Private | Upload Profile Picture                   |
 | GET     | /users/userID/avataar              | Private | View Profile Picture                     |
 | DELETE  | /users/me/avatar                   | Private | Delete Profile Picture                   |
@@ -30,20 +31,6 @@ Task manager application built using **NODE JS** and **MongoDB**. It follows a *
 | GET     | /users/tasks?skip=3                | Private | Paginating result                        |
 | PATCH   | /users/tasks/taskID                | Private | Update a Task                            |
 | DELETE  | /users/tasks/taskID                | Private | Delete a Task                            |
-| POST    | /users/logout                      | Private | Logout an account                        |
-| POST    | /users/logoutall                   | Private | Logout all accounts                      |
-
-## Hosted Domain Link
-
-[Task Manager API](https://kater-task-manager-api.herokuapp.com/)
-
-## Postman Collection Link
-
-[Task Manager API Shared Collection](https://documenter.getpostman.com/view/7972459/Szf82npY)
-
-## Contributing
-
-You can fork the repository and send pull request or reach out easily to me via twitter => [Kater Akeren](https://twitter.com/katerakeren)
 
 ## Security Vulnerabilities
 

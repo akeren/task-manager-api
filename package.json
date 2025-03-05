@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"description": "A task manager REST API application developed using Node.JS ",
 	"main": "src/server.js",
+	"type": "module",
 	"scripts": {
 		"start": "node src/server.js",
 		"dev": "nodemon src/server.js",
@@ -22,9 +23,12 @@
 		"bcryptjs": "^2.4.3",
 		"dotenv": "^8.2.0",
 		"express": "^4.19.2",
+		"express-validator": "^7.2.1",
+		"joi": "^17.13.3",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.13.20",
 		"multer": "^1.4.2",
+		"nodemon": "^3.1.9",
 		"sharp": "^0.32.6",
 		"validator": "^13.7.0"
 	},

@@ -1,17 +1,21 @@
-module.exports = async (req, res) => {
-	const updates = Object.keys(req.body);
-	const allowedUpdates = ['name', 'email', 'password', 'age'];
-	const isValidOperation = updates.every((update) => {
-		return allowedUpdates.includes(update);
-	});
-	if (!isValidOperation) {
-		return res.status(400).json({ status: 'fail', error: 'Invalid Updates..' });
-	}
+import User from "../../models/User.js";
+const updateAccount = async (req, res) => {
 	try {
-		updates.forEach((update) => (req.user[update] = req.body[update]));
-		await req.user.save();
-		res.status(200).json({ status: 'success', user: req.user });
+		const userId = req.user.id;
+		const updatedAccount = await User.findByIdAndUpdate(userId, req.body, {
+			new: true,
+			runValidators: true,
+		}).select("-password");
+
+		if (!updatedAccount) {
+			return res.status(401).json({ message: "Account not found" });
+		}
+
+		res.status(200).json({ success: true, user: updatedAccount });
 	} catch (error) {
-		res.status(400).json({ status: 'fail', error });
+		console.error("Error while updating the account", error);
+		res.status(400).json({ success: false, message: "Internal server error" });
 	}
 };
+
+export default updateAccount;

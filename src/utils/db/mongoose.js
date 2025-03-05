@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
-(async () => {
+import mongoose from "mongoose";
+export const connectDB = async () => {
 	try {
 		await mongoose.connect(process.env.DB_URL, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			useCreateIndex: true,
-			useFindAndModify: false
+			useFindAndModify: false,
 		});
 	} catch (error) {
-		console.error('Error', error);
+		console.error("Error", error);
 	}
-})();
+};

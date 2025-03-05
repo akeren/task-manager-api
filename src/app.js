@@ -1,13 +1,13 @@
-const express = require('express')
+import express from "express";
 
-const userRouter = require('./api/routes/user')
-const taskRouter = require('./api/routes/task')
+import taskRouter from "./api/routes/task.js";
+import userRouter from "./api/routes/user.js";
 
-const app = express()
-app.use(express.json())
+const app = express();
+app.use(express.json());
 
 // ROUTES
-app.use(userRouter)
-app.use(taskRouter)
+app.use(userRouter);
+app.use(taskRouter);
 
-module.exports = { app}
+export default app;

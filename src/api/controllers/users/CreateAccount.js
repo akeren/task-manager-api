@@ -5,14 +5,13 @@ const createAccount = async (req, res) => {
 	try {
 		const { email } = req.body;
 
-		// Checking if the user is already in the database.
 		const existingAccount = await User.findOne({ email: email });
 		if (existingAccount) {
 			return res
 				.status(400)
-				.json({ status: "fail", message: "Account already exists!" });
+				.json({ success: false, message: "Account already exists!" });
 		}
-		// We create a new account after the request body is validated.
+
 		const user = new User(req.body);
 		await user.save();
 
@@ -21,9 +20,10 @@ const createAccount = async (req, res) => {
 		if (!user) {
 			throw new Error("Unable to create Account!");
 		}
-		res.status(201).json({ status: "success", user });
+		res.status(201).json({ success: true, user });
 	} catch (error) {
-		res.status(400).json({ status: "fail", error });
+		console.error("Error while creating account", error);
+		res.status(400).json({ success: false, message: "Internal server error" });
 	}
 };
 

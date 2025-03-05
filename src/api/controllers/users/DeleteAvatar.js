@@ -5,7 +5,8 @@ const deleteAvatar = async (req, res) => {
 		res.send();
 		res.status(204).send();
 	} catch (error) {
-		res.status(500).json({ status: "fail", error });
+		console.error(error);
+		res.status(500).json({ success: true, message: "Internal server error" });
 	}
 };
 export default deleteAvatar;

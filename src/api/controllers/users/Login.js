@@ -7,14 +7,12 @@ const login = async (req, res) => {
 		const { email, password } = req.body;
 		const user = await User.findOne({ email: email });
 
-		// Checking if the user is already registered
 		if (!user) {
 			return res
 				.status(401)
 				.json({ success: false, message: "Invalid email or password" });
 		}
 
-		// Checking if the user's password is correct
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (!isMatch) {
 			return res

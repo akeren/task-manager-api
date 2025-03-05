@@ -2,7 +2,6 @@ import User from "../models/User.js";
 import { verifyAuthToken } from "../../utils/generateAuthToken.js";
 
 const authenticateToken = async (req, res, next) => {
-	// Get the token from the Authorization header
 	const token = req.headers.authorization?.split(" ")[1];
 
 	if (!token) {

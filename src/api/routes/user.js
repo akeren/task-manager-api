@@ -5,6 +5,7 @@ import {
 	validateUserForCreating,
 	validateUserForUpdating,
 } from "../validations/userValidation.js";
+import { validatePasswordAndEmail } from "../validations/passwordAndEmailValidation.js";
 
 /*
  ** import controllers
@@ -17,6 +18,7 @@ import DeleteAccount from "../controllers/users/DeleteAccount.js";
 import UploadAvatar from "../controllers/users/UploadAvatar.js";
 import DeleteAvatar from "../controllers/users/DeleteAvatar.js";
 import GetAvatar from "../controllers/users/GetAvatar.js";
+import updatePasswordAndEmail from "../controllers/users/UpdatePasswordAndEmail.js";
 
 // utils
 import errorMessage from "../../utils/errors/message.js";
@@ -30,6 +32,11 @@ router.use(auth);
 
 router.get("/users/me", Profile);
 router.patch("/users/me", validateUserForUpdating, UpdateAccount);
+router.put(
+	"/users/me/update-login",
+	validatePasswordAndEmail,
+	updatePasswordAndEmail
+);
 router.delete("/users/me", DeleteAccount);
 router
 	.route("/users/me/avatar")

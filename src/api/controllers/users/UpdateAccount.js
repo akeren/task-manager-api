@@ -11,9 +11,10 @@ const updateAccount = async (req, res) => {
 			return res.status(401).json({ message: "Account not found" });
 		}
 
-		res.status(200).json({ status: "success", user: updatedAccount });
+		res.status(200).json({ success: true, user: updatedAccount });
 	} catch (error) {
-		res.status(400).json({ status: "fail", error });
+		console.error("Error while updating the account", error);
+		res.status(400).json({ success: false, message: "Internal server error" });
 	}
 };
 

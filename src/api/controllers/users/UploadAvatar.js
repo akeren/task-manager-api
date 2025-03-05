@@ -7,9 +7,10 @@ const uploadAvatar = async (req, res) => {
 			.toBuffer();
 		req.user.avatar = modifyImageBuffer;
 		await req.user.save();
-		res.status(200).json({ status: "success" });
+		res.status(200).json({ success: true });
 	} catch (error) {
-		res.status(500).json({ status: "fail", error });
+		console.error(error);
+		res.status(500).json({ success: false, message: "Internal sever error" });
 	}
 };
 

@@ -1,6 +1,5 @@
 import Joi from "joi";
 
-// User schema validation
 const userSchemaForCreating = Joi.object({
 	name: Joi.string().trim().min(2).max(50).required().messages({
 		"string.empty": "Name cannot be empty.",
@@ -49,7 +48,6 @@ const userSchemaForUpdating = Joi.object({
 	}),
 });
 
-// Middleware for validating user data
 export const validateUserForCreating = (req, res, next) => {
 	const { error } = userSchemaForCreating.validate(req.body, {
 		abortEarly: false,
@@ -57,7 +55,7 @@ export const validateUserForCreating = (req, res, next) => {
 
 	if (error) {
 		return res.status(400).json({
-			status: "fail",
+			success: false,
 			errors: error.details.map((err) => err.message),
 		});
 	}
@@ -70,9 +68,8 @@ export const validateUserForUpdating = (req, res, next) => {
 	});
 
 	if (error) {
-		console.log("heelo");
 		return res.status(400).json({
-			status: "fail",
+			success: false,
 			errors: error.details.map((err) => err.message),
 		});
 	}

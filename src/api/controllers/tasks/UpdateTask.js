@@ -21,9 +21,10 @@ export const updateTask = async (req, res) => {
 			return res.status(404).json({ status: "fail", error: "Task not found." });
 		}
 
-		res.status(200).json({ status: "success", updatedTask });
+		res.status(200).json({ success: true, updatedTask });
 	} catch (error) {
-		res.status(400).json({ status: "fail", error: error.message });
+		console.error("error while updating the task", error);
+		res.status(400).json({ success: false, message: "Internal server error" });
 	}
 };
 

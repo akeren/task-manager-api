@@ -1,6 +1,5 @@
 import Joi from "joi";
 
-// Schema for Task validation
 const taskSchemaForCreating = Joi.object({
 	description: Joi.string().trim().min(3).max(255).required().messages({
 		"string.empty": "Description cannot be empty.",
@@ -19,7 +18,6 @@ const taskSchemaForUpdating = Joi.object({
 	completed: Joi.boolean(),
 });
 
-// Middleware for validating Task data
 export const validateTaskForCreating = (req, res, next) => {
 	const { error } = taskSchemaForCreating.validate(req.body, {
 		abortEarly: false,

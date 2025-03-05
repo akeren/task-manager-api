@@ -7,9 +7,9 @@ const getAvatar = async (req, res) => {
 		}
 		res.set("Content-Type", "image/png");
 		res.send();
-		res.status(200).json({ status: "success", user: user.avatar });
+		res.status(200).json({ success: true, user: user.avatar });
 	} catch (error) {
-		res.status(404).json({ status: "fail", error });
+		res.status(404).json({ success: false, error });
 	}
 };
 export default getAvatar;

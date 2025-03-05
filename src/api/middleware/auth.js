@@ -1,25 +1,30 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+import User from "../models/User.js";
+import { verifyAuthToken } from "../../utils/generateAuthToken.js";
 
-const auth = async (req, res, next) => {
+const authenticateToken = async (req, res, next) => {
+	// Get the token from the Authorization header
+	const token = req.headers.authorization?.split(" ")[1];
+
+	if (!token) {
+		return res
+			.status(403)
+			.json({ message: "Access denied. No token provided" });
+	}
+
 	try {
-		const tokenProvidedByUser = req
-			.header('Authorization')
-			.replace('Bearer ', '');
-		const decode = jwt.verify(tokenProvidedByUser, process.env.JWT_SECRET_KEY);
-		const user = await User.findOne({
-			_id: decode._id,
-			'tokens.token': tokenProvidedByUser
-		});
+		const decoded = verifyAuthToken(token);
+
+		const user = await User.findById(decoded.id).select("-password");
 		if (!user) {
-			throw new Error();
+			return res
+				.status(401)
+				.json({ message: "Invalid token or user does not exist" });
 		}
-		req.token = tokenProvidedByUser;
 		req.user = user;
 		next();
-	} catch (e) {
-		res.status(401).json({ status: 'fail', error: 'Please authenticate.' });
+	} catch (error) {
+		res.status(401).json({ message: "Invalid or expired token" });
 	}
 };
 
-module.exports = auth;
+export default authenticateToken;

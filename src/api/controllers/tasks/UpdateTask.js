@@ -1,28 +1,30 @@
-const Task = require('../../models/Task');
-module.exports = async (req, res) => {
-	const updates = Object.keys(req.body);
-	const allowedUpdates = ['completed', 'description'];
-	const isValidOperation = updates.every((update) => {
-		return allowedUpdates.includes(update);
-	});
+import mongoose from "mongoose";
+import Task from "../../models/Task.js";
 
-	if (!isValidOperation) {
-		return res
-			.status(400)
-			.json({ status: 'fail', error: 'Invalid Updates....!' });
-	}
+export const updateTask = async (req, res) => {
 	try {
-		const task = await Task.findOne({
-			_id: req.params.id,
-			owner: req.user._id
-		});
-		if (!task) {
-			return res.status(404).send();
+		const { id } = req.params;
+		// Validate ObjectId format
+		if (!mongoose.isValidObjectId(id)) {
+			return res.status(400).json({
+				success: false,
+				message: "Invalid task ID format.",
+			});
 		}
-		updates.forEach((update) => (task[update] = req.body[update]));
-		await task.save();
-		res.status(200).json({ status: 'success', task });
+
+		const updatedTask = await Task.findByIdAndUpdate(id, req.body, {
+			new: true,
+			runValidators: true,
+		});
+
+		if (!updatedTask) {
+			return res.status(404).json({ status: "fail", error: "Task not found." });
+		}
+
+		res.status(200).json({ status: "success", updatedTask });
 	} catch (error) {
-		res.status(400).json({ status: 'fail', error });
+		res.status(400).json({ status: "fail", error: error.message });
 	}
 };
+
+export default updateTask;

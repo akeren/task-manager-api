@@ -1,38 +1,38 @@
-module.exports = async (req, res) => {
-	const match = {};
-	const sort = {};
+import Task from "../../models/Task.js";
 
-	if (req.query.completed) {
-		match.completed = req.query.completed === 'true';
-	}
-
-	if (req.query.sortBy) {
-		const parts = req.query.sortBy.split(':');
-		if (parts[1].toUpperCase() === 'DESC') {
-			sort[parts[0]] = -1;
-		} else if (parts[1].toUpperCase() === 'ASC') {
-			sort[parts[0]] = 1;
-		} else {
-			res.status(400).json({
-				status: 'fail',
-				error: 'Allowed only asc and desc for sorting criterial'
-			});
-		}
-	}
+const getAllTasks = async (req, res) => {
 	try {
-		await req.user
-			.populate({
-				path: 'tasks',
-				match,
-				options: {
-					limit: parseInt(req.query.limit),
-					skip: parseInt(req.query.skip),
-					sort
-				}
-			})
-			.execPopulate();
-		res.status(200).json({ status: 'success', user: req.user.tasks });
+		const match = { owner: req.user.id };
+		const sort = {};
+
+		if (req.query?.completed) {
+			match.completed = req.query.completed === "true";
+		}
+
+		if (req.query?.sortBy) {
+			const [field, order] = req.query.sortBy.split(":");
+			if (!["asc", "desc"].includes(order?.toLowerCase())) {
+				return res.status(400).json({
+					success: false,
+					error: "Allowed values for sorting are 'asc' or 'desc'.",
+				});
+			}
+			sort[field] = order.toLowerCase() === "desc" ? -1 : 1;
+		}
+
+		const limit = parseInt(req.query.limit) || 10;
+		const skip = parseInt(req.query.skip) || 0;
+
+		const allTasks = await Task.find(match).sort(sort).skip(skip).limit(limit);
+
+		res.status(200).json({ success: true, tasks: allTasks });
 	} catch (error) {
-		res.status(500).json({ status: 'fail', error });
+		console.error("Error fetching tasks:", error);
+		res.status(500).json({
+			success: false,
+			message: error.message || "Internal server error",
+		});
 	}
 };
+
+export default getAllTasks;

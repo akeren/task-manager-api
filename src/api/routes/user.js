@@ -1,42 +1,40 @@
-const express = require('express');
-const auth = require('../middleware/auth');
-const upload = require('../middleware/upload');
+import express from "express";
+import auth from "../middleware/auth.js";
+import upload from "../middleware/upload.js";
+import {
+	validateUserForCreating,
+	validateUserForUpdating,
+} from "../validations/userValidation.js";
 
 /*
  ** import controllers
  */
-const CreateAccount = require('../controllers/users/CreateAccount');
-const Login = require('../controllers/users/Login');
-const Logout = require('../controllers/users/Logout');
-const LogoutAllAccounts = require('../controllers/users/LogoutAllAccounts');
-const Profile = require('../controllers/users/Profile');
-const UpdateAccount = require('../controllers/users/UpdateAccount');
-const DeleteAccount = require('../controllers/users/DeleteAccount');
-const UploadAvatar = require('../controllers/users/UploadAvatar');
-const DeleteAvatar = require('../controllers/users/DeleteAvatar');
-const GetAvatar = require('../controllers/users/GetAvatar');
+import CreateAccount from "../controllers/users/CreateAccount.js";
+import Login from "../controllers/users/Login.js";
+import Profile from "../controllers/users/Profile.js";
+import UpdateAccount from "../controllers/users/UpdateAccount.js";
+import DeleteAccount from "../controllers/users/DeleteAccount.js";
+import UploadAvatar from "../controllers/users/UploadAvatar.js";
+import DeleteAvatar from "../controllers/users/DeleteAvatar.js";
+import GetAvatar from "../controllers/users/GetAvatar.js";
 
 // utils
-const errorMessage = require('../../utils/errors/message');
+import errorMessage from "../../utils/errors/message.js";
 
 const router = express.Router();
 
-router.post('/users', CreateAccount);
-router.post('/users/login', Login);
+router.post("/users", validateUserForCreating, CreateAccount);
+router.post("/users/login", Login);
 
 router.use(auth);
 
-router.post('/users/logout', Logout);
-router.post('/users/logoutAll', LogoutAllAccounts);
+router.get("/users/me", Profile);
+router.patch("/users/me", validateUserForUpdating, UpdateAccount);
+router.delete("/users/me", DeleteAccount);
 router
-	.route('/users/me')
-	.get(Profile)
-	.patch(UpdateAccount)
-	.delete(DeleteAccount);
-router
-	.route('/users/me/avatar')
-	.post(upload.single('avatar'), UploadAvatar, errorMessage)
+	.route("/users/me/avatar")
+	.post(upload.single("avatar"), UploadAvatar, errorMessage)
 	.delete(DeleteAvatar);
-router.get('/users/:id/avatar', GetAvatar);
+router.get("/users/:id/avatar", GetAvatar);
 
-module.exports = router;
+export default router;

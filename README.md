@@ -17,6 +17,7 @@ Task manager application built using **NODE JS** and **MongoDB**. It follows a *
 | POST    | /users/login                       | Public  | Login                                    |
 | GET     | /users/me                          | Private | User's Profile                           |
 | PATCH   | /users/me                          | Private | Update Profile                           |
+| PUT     | /users/update-login                | Private | Update Password and email                |
 | POST    | /users/me/avatar                   | Private | Upload Profile Picture                   |
 | GET     | /users/userID/avataar              | Private | View Profile Picture                     |
 | DELETE  | /users/me/avatar                   | Private | Delete Profile Picture                   |

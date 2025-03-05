@@ -13,7 +13,7 @@ const deleteAccount = async (req, res) => {
 		}
 
 		res.json({ success: true, message: "Account deleted successfully" });
-		// sendCancelationEmailMessage(req.user.email, req.user.name);
+		sendCancellationEmailMessage(req.user.email, req.user.name);
 	} catch (error) {
 		console.error("Delete account error", error);
 		res.status(500).json({ success: false, message: "Internal server error" });

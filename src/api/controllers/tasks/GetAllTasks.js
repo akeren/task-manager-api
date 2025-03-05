@@ -10,6 +10,7 @@ const getAllTasks = async (req, res) => {
 		}
 
 		if (req.query?.sortBy) {
+			// example: sortBy=field:asc
 			const [field, order] = req.query.sortBy.split(":");
 			if (!["asc", "desc"].includes(order?.toLowerCase())) {
 				return res.status(400).json({

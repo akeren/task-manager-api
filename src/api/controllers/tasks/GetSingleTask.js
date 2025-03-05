@@ -4,12 +4,12 @@ import Task from "../../models/Task.js";
 const getSingleTask = async (req, res) => {
 	try {
 		const { id } = req.params;
-		// Validate ObjectId format
 
+		// Validate ObjectId format
 		if (!mongoose.isValidObjectId(id)) {
 			return res.status(400).json({
 				success: false,
-				error: "Invalid task ID format.",
+				message: "Invalid task ID format.",
 			});
 		}
 

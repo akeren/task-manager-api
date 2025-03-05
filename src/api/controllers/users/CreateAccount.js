@@ -15,8 +15,9 @@ const createAccount = async (req, res) => {
 		// We create a new account after the request body is validated.
 		const user = new User(req.body);
 		await user.save();
-		// uncomment the following line before sending the changes
+
 		sendWelcomeEmailMessage(user.email, user.name);
+
 		if (!user) {
 			throw new Error("Unable to create Account!");
 		}
